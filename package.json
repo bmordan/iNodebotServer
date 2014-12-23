@@ -1,0 +1,20 @@
+{
+  "name": "iNodebotServer",
+  "version": "0.0.1",
+  "description": "Web based robot interface",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "robot"
+  ],
+  "author": "bmordan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.10.6",
+    "socket.io": "^1.2.1",
+    "ejs": "^1.0.0",
+    "express-ejs-layouts": "^1.1.0"
+  }
+}
