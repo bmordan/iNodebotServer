@@ -1,3 +1,4 @@
+var socket = io.connect('192.168.0.13:3000');
 var Engine = famous.core.Engine;
 var Modifier = famous.core.Modifier;
 var Transform = famous.core.Transform;
@@ -14,13 +15,11 @@ GenericSync.register({
 });
 var mainContext = Engine.createContext();
 var mainContextWidthFifth = mainContext.getSize()[0]/5;
-
 var background = new ImageSurface({
   content: 'img/nodebot_head.svg',
   properties: {padding: '2em'}
 });
 mainContext.add(background)
-
 var control = {
   size: [mainContextWidthFifth, mainContextWidthFifth],
   properties: {
@@ -28,7 +27,6 @@ var control = {
     borderRadius: '49%'
   } 
 };
-
 var leftControl = new Surface(control);
 var leftYpos = new Transitionable(0);
 var leftControlModifier = new Modifier({
@@ -44,12 +42,15 @@ var leftControlSync = new GenericSync({
 });
 leftControl.pipe(leftControlSync);
 leftControlSync.on('update', function(data){
-  leftYpos.set(data.position[1])
+  var delta = data.position[1]
+  leftYpos.set(delta)
+  if(delta < 0){var dir = 'forward'}else{var dir = 'reverse'}
+  socket.emit('drive', {motor: 'L', dir: dir, speed: 200});
 });
 leftControlSync.on('end', function(data){
   leftYpos.set(0,{duration: 500, curve: Easing.outBounce })
+  socket.emit('drive', {motor: 'L', dir: 'stop', speed: 0});
 });
-
 var rightControl = new Surface(control);
 var rightYpos = new Transitionable(0);
 var rightControlModifier = new Modifier({
@@ -65,11 +66,14 @@ var rightControlSync = new GenericSync({
 });
 rightControl.pipe(rightControlSync)
 rightControlSync.on('update', function(data){
-  rightYpos.set(data.position[1])
+  var delta = data.position[1]
+  rightYpos.set(delta)
+  if(delta < 0){var dir = 'forward'}else{var dir = 'reverse'}
+  socket.emit('drive', {motor: 'R', dir: dir, speed: 200});
 });
 rightControlSync.on('end', function(data){
-  rightYpos.set(0,{duration: 500, curve: Easing.outBounce })
+  rightYpos.set(0,{duration: 500, curve: Easing.outBounce });
+  socket.emit('drive', {motor: 'R', dir: 'stop', speed: 0});
 });
-
 mainContext.add(leftControlModifier).add(leftControl);
 mainContext.add(rightControlModifier).add(rightControl);

@@ -10,12 +10,10 @@ server.use(expressLayouts);
 server.use(require('express').static(__dirname + '/public'));
 
 server.get('/', function(req, res){
-  io.emit('halt', {speed: 200});
   res.render('index', {layout: 'layout'})
 });
 
 server.get('/drive', function(req, res){
-  io.emit('drive', {speed: 200});
   res.render('drive', {layout: 'layout'});
 });
 
@@ -26,5 +24,8 @@ http.listen(port, function(){
 io.on('connection', function(connection){
   connection.on('ready', function(data){
     console.log('THREE LAWS SAFE iNodebot connected');
-  })
+  });
+  connection.on('drive', function(data){
+    console.log(data)
+  });
 });
