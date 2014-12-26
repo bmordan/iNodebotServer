@@ -48,23 +48,22 @@ var rightControlModifier = new Modifier({
 leftControl.on('touchmove', function(data){
   var delta = data.targetTouches[0].clientY-mainContextWidthFifth
   leftYpos.set(delta)
-  if(delta < 0){var dir = 'forward'}else if(delta > 0){var dir = 'reverse'}
-  console.log(socket)
-  socket.emit('movement', {motor: 'L', dir: dir})
+  if(delta > 0){var fn = 'leftForward'}else{var fn = 'leftReverse'}
+  socket.emit('movement', {fn: fn});
 });
 leftControl.on('touchend', function(data){
   leftYpos.set(0, {duration: 633, curve: Easing.outBounce})
-  socket.emit('movement', {motor: 'L', dir: 'stop'})
+  socket.emit('movement', {fn: 'leftStop'})
 });
 rightControl.on('touchmove', function(data){
   var delta = data.targetTouches[0].clientY-mainContextWidthFifth
   rightYpos.set(delta)
-  if(delta < 0){var dir = 'forward'}else if(delta > 0){var dir = 'reverse'}
-  socket.emit('movement', {motor: 'R', dir: dir})
+  if(delta > 0){var fn = 'rightForward'}else{var fn = 'rightReverse'}
+  socket.emit('movement', {fn: fn});
 });
 rightControl.on('touchend', function(data){
   rightYpos.set(0, {duration: 633, curve: Easing.outBounce})
-  socket.emit('movement', {motor: 'R', dir: 'stop'})
+  socket.emit('movement', {fn: 'rightStop'})
 });
 mainContext.add(leftControlModifier).add(leftControl);
 mainContext.add(rightControlModifier).add(rightControl);
