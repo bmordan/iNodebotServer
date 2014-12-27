@@ -14,7 +14,7 @@ server.get('/', function(req, res){
 server.get('/drive', function(req, res){
   res.render('drive', {layout: 'layout'});
 });
-http.listen(3000, function(){console.log('iNodebotServer running on '+port)});
+http.listen(port, function(){console.log('iNodebotServer running on '+port)});
 io.on('connection', function(connection){
 
   connection.on('msg', function(data){
