@@ -1,5 +1,5 @@
 var port = process.env.PORT || 3000;
-var socket = io.connect('http://inodebot.herokuapp.com:'+port)
+var socket = io.connect('http://inodebot.herokuapp.com:%s',port)
 var Engine = famous.core.Engine;
 var Modifier = famous.core.Modifier;
 var Transform = famous.core.Transform;
