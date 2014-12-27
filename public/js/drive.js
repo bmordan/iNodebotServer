@@ -1,4 +1,4 @@
-var socket = io.connect('http://192.168.0.4:3000');
+var socket = io.connect('http://inodebot.herokuapp.com:3000')
 var Engine = famous.core.Engine;
 var Modifier = famous.core.Modifier;
 var Transform = famous.core.Transform;

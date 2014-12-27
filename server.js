@@ -3,6 +3,7 @@ var http = require('http').Server(server);
 var expressLayouts = require('express-ejs-layouts');
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
+var host = process.env.NODE_HOST
 server.set('view engine', 'ejs');
 server.set('views',__dirname + '/views');
 server.use(expressLayouts);
@@ -13,7 +14,7 @@ server.get('/', function(req, res){
 server.get('/drive', function(req, res){
   res.render('drive', {layout: 'layout'});
 });
-http.listen(port, function(){console.log('iNodebotServer running on '+port)});
+http.listen(3000, function(){console.log('iNodebotServer running on '+port)});
 io.on('connection', function(connection){
 
   connection.on('msg', function(data){
