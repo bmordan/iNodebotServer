@@ -3,7 +3,6 @@ var http = require('http').Server(server);
 var expressLayouts = require('express-ejs-layouts');
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
-var host = process.env.NODE_HOST
 server.set('view engine', 'ejs');
 server.set('views',__dirname + '/views');
 server.use(expressLayouts);
