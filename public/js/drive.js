@@ -54,6 +54,7 @@ leftControl.on('touchmove', function(data){
 leftControl.on('touchend', function(data){
   leftYpos.set(0, {duration: 633, curve: Easing.outBounce})
   socket.emit('movement', {fn: 'leftStop'})
+  console.log('leftStop')
 });
 rightControl.on('touchmove', function(data){
   var delta = data.targetTouches[0].clientY-mainContextWidthFifth

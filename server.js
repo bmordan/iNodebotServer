@@ -14,6 +14,7 @@ server.get('/drive', function(req, res){
   res.render('drive', {layout: 'layout'});
 });
 http.listen(port, function(){console.log('iNodebotServer running on '+port)});
+io.set('transport', ['xhr-polling']);
 io.on('connection', function(connection){
   connection.on('msg', function(data){
     console.log('THREE LAWS SAFE iNodebot says: %s', data.msg);
