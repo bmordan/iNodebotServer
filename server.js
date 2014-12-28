@@ -15,12 +15,10 @@ server.get('/drive', function(req, res){
 });
 http.listen(port, function(){console.log('iNodebotServer running on '+port)});
 io.on('connection', function(connection){
-
   connection.on('msg', function(data){
     console.log('THREE LAWS SAFE iNodebot says: %s', data.msg);
   });
   connection.on('movement', function(data){
     io.emit('motor', {fn: data.fn})
   });
-
 });

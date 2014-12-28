@@ -4,7 +4,3 @@ html {
   color: #000;
   font-family: 'Didact Gothic', sans-serif;
 }
-.double-sided {
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
-}
