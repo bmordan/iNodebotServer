@@ -2,43 +2,54 @@ var Engine = famous.core.Engine;
 var Modifier = famous.core.Modifier;
 var Transform = famous.core.Transform;
 var View = famous.core.View;
+var SequentialLayout = famous.views.SequentialLayout;
 var Surface = famous.core.Surface;
 var ImageSurface = famous.surfaces.ImageSurface;
 var mainContext = Engine.createContext();
 var Transitionable = famous.transitions.Transitionable;
-var fifthHeight = new Transitionable(mainContext.getSize()[1]/5)
-var logo = new ImageSurface({
-    size: [300, 300],
-    content: 'img/nodebots.png',
-    properties: {
-      backfaceVisibility: 'visible'
-    }
-});
-var initialTime = Date.now();
-var logoModifier = new Modifier({
-    origin: [0.5, 0.5],
-    align: [0.5, 0.5],
-    transform : function () {
-        return Transform.rotateY(.0002 * (Date.now() - initialTime));
-    }
-});
+var responsiveWidth = function(){
+  var windowWidth = mainContext.getSize()[0];
+  if(windowWidth < 400){
+    return mainContext.getSize()[0]-20;
+  }else{
+    return mainContext.getSize()[0]/5;
+  }
+}
 var title = new Surface({
-  size: [undefined, fifthHeight.get()],
   content: 'iNodebot',
   properties: {
     textAlign: 'center',
     fontSize: '3em'
   }
 });
-var titleModifier = new Modifier({
-  origin: [0.5, 0],
-  align: [0.5, 1],
-  transform: function() {
-    return Transform.translate(0,-fifthHeight.get(),0);
-  }
+var logo = new ImageSurface({
+    size: [responsiveWidth(),responsiveWidth()],
+    content: 'img/nodebots.png'
 });
-title.on('click', function(){
-  window.location = '/drive'
+var menuItems = ['Drive','LineFollow','Program'];
+var menuSurfaces = [logo];
+var menuView = new SequentialLayout();
+menuView.sequenceFrom(menuSurfaces);
+for(var i=0;i<menuItems.length;i+=1){
+  var route = menuItems[i]
+  var surface = new Surface({
+    size: [responsiveWidth(), mainContext.getSize()[1]/16],
+    content: route,
+    properties: {
+      backgroundColor: 'hotpink',
+      color: 'white',
+      border: 'solid 1px white',
+      fontSize: '1em',
+      padding: '0.5em',
+      cursor: 'pointer'
+    }
+  });
+  surface.on('click', function(e){window.location = '/'+e.target.innerHTML});
+  menuSurfaces.push(surface);
+}
+var centerModifier = new Modifier({
+  origin: [0.5, 0.5],
+  align: [0.5, 0.5]
 });
-mainContext.add(logoModifier).add(logo);
-mainContext.add(titleModifier).add(title);
+mainContext.add(title);
+mainContext.add(centerModifier).add(menuView);
