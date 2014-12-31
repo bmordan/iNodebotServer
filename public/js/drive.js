@@ -17,13 +17,30 @@ var mainContext = Engine.createContext();
 var mainContextWidthFifth = mainContext.getSize()[0]/5;
 var background = new ImageSurface({
   content: 'img/nodebot_head.svg',
-  properties: {padding: '2em'}
+  properties: {padding: '1em'}
 });
 mainContext.add(background)
-var control = {
-  size: [mainContextWidthFifth, mainContextWidthFifth],
+var back = new Surface({
+  size: [mainContextWidthFifth, mainContextWidthFifth/6],
+  content: 'Back',
   properties: {
-    backgroundColor: 'white',
+    fontSize: mainContextWidthFifth/8+'px',
+    backgroundColor: 'hotpink',
+    color: 'white',
+    padding: '0em 0em 0em 0.2em',
+    margin: '-0.2em 0em 0.2em 0.2em',
+    cursor: 'pointer'
+  }
+});
+var backModifier = new Modifier({
+  origin: [0, 1],
+  align: [0, 1]
+});
+back.on('click', function(e){window.location = '/'});
+var control = {
+  size: [mainContextWidthFifth/2, mainContextWidthFifth/2],
+  properties: {
+    backgroundColor: 'black',
     borderRadius: '49%'
   } 
 };
@@ -33,7 +50,7 @@ var leftControlModifier = new Modifier({
   origin: [0, 0.5],
   align: [0, 0.5],
   transform: function(){
-    return Transform.translate(mainContextWidthFifth, leftYpos.get(), 0)
+    return Transform.translate(mainContext.getSize()[0]/3, leftYpos.get(), 0)
   }
 });
 var rightControl = new Surface(control);
@@ -42,7 +59,7 @@ var rightControlModifier = new Modifier({
   origin: [1, 0.5],
   align: [1, 0.5],
   transform: function(){
-    return Transform.translate(-mainContextWidthFifth, rightYpos.get(), 0)
+    return Transform.translate(-mainContext.getSize()[0]/3, rightYpos.get(), 0)
   }
 });
 leftControl.on('touchmove', function(data){
@@ -68,3 +85,4 @@ rightControl.on('touchend', function(data){
 });
 mainContext.add(leftControlModifier).add(leftControl);
 mainContext.add(rightControlModifier).add(rightControl);
+mainContext.add(backModifier).add(back)

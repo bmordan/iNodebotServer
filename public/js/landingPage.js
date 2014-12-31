@@ -39,8 +39,8 @@ for(var i=0;i<menuItems.length;i+=1){
       backgroundColor: 'hotpink',
       color: 'white',
       border: 'solid 1px white',
-      fontSize: '1em',
-      padding: '0.5em',
+      fontSize: mainContext.getSize()[1]/24+'px',
+      padding: '0em 0em 0em 0.2em',
       cursor: 'pointer'
     }
   });

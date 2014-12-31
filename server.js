@@ -10,8 +10,11 @@ server.use(require('express').static(__dirname + '/public'));
 server.get('/', function(req, res){
   res.render('index', {layout: 'layout'})
 });
-server.get('/drive', function(req, res){
+server.get('/Drive', function(req, res){
   res.render('drive', {layout: 'layout'});
+});
+server.get('/LineFollow', function(req, res){
+  res.render('linefollow', {layout: 'layout'});
 });
 http.listen(port, function(){console.log('iNodebotServer running on '+port)});
 io.on('connection', function(connection){
