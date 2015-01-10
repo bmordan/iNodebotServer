@@ -4,7 +4,8 @@
   "description": "Web based robot interface",
   "main": "server.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node server.js"
   },
   "keywords": [
     "robot"
